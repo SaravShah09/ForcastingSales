@@ -1,12 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # Sales Forecasting Project
-# ***
-
-# _**Importing the required libraries & packages**_
-
-# In[1]:
 
 
 import numpy as np
@@ -815,10 +806,6 @@ pickle.dump(cat,open('Model.pkl','wb'))
 
 
 # _**Loading the pickle file and predicting the dependent variable for the whole data and getting the r2 score between the predicted dependent variable and dependent variable**_
-
-# In[76]:
-
-
 model = pickle.load(open('Model.pkl','rb'))
 fpred = model.predict(x)
 print('R2 Score of Full Data : ',r2_score(y,fpred))

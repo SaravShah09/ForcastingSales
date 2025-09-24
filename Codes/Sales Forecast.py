@@ -193,104 +193,56 @@ Outlet_Size_Null['Outlet_Type'].value_counts()
 
 df.groupby(['Outlet_Type','Outlet_Size']).agg({'Outlet_Type':[np.size]})
 
-
 # _**Getting the mode values of the `Outlet_Size` with respect to `Outlet_Type` column of the dataset using <span style = 'background : green'><span style = 'color : white'> Pivot Table </span> </span> function**_ 
-
-# In[22]:
-
 
 Outlet_Size_Mode = df.pivot_table(values = 'Outlet_Size', columns = 'Outlet_Type', aggfunc = (lambda x : x.mode()[0]))
 display(Outlet_Size_Mode)
 
-
 # _**Getting the null values of `Outlet_Size` column from the dataset and treating the null value using mode values of the `Outlet_Size` with respect to `Outlet_Type` column**_
-
-# In[23]:
-
 
 miss_bool = df['Outlet_Size'].isna()
 df.loc[miss_bool,'Outlet_Size'] = df.loc[miss_bool,'Outlet_Type'].apply(lambda x : Outlet_Size_Mode[x])
 
-
 # _**After missing value treatment of the `Outlet_Size` column, checking for the null values in the column**_
-
-# In[24]:
-
 
 df['Outlet_Size'].isna().sum()
 
-
 # _**Checking for the null values of all the columns from the dataset after missing value treatment**_
-
-# In[25]:
-
 
 df.isna().sum()
 
-
 # _**Getting the count of `Item_Visibility` column with value 0**_
 
-# In[26]:
-
-
 sum(df['Item_Visibility'] == 0)
-
 
 # _**Filling out the 0 values from the `Item_Visibility` column with mean values using <span style = 'background : green'><span style = 'color : white'> replace </span> </span> function**_ 
 
-# In[27]:
-
-
 df.loc[:,'Item_Visibility'].replace([0],[df['Item_Visibility'].mean()],inplace = True)
-
 
 # _**Now, again checking out for 0 values in the `Item_Visibility` column after filling it out to verify any misplacement happened**_
 
-# In[28]:
-
-
 sum(df['Item_Visibility'] == 0)
-
 
 # _**Getting the unique value counts from the `Item_Fat_Content` column**_
 
-# In[29]:
-
-
 df['Item_Fat_Content'].value_counts()
 
-
 # _**After seeing the unique value counts from the `Item_Fat_Content` column, there have been some mistyping occured like the same categories were typed under different names. For further processing, all the mistypings are corrected and named under a single category. Checking out for the value counts of `Item_Fat_Content` column**_
-
-# In[30]:
-
 
 df['Item_Fat_Content'] = df['Item_Fat_Content'].replace({'LF' : 'Low Fat', 'low fat' : 'Low Fat', 'reg' : 'Regular'})
 df['Item_Fat_Content'].value_counts()
 
-
 # _**Adding new column `New_Item_Type` to the dataset by getting the first two characters from the `Item_Identifier` column which represents the category of the item and getting the value counts of the `New_Item_Type` column**_
-
-# In[31]:
-
 
 df['New_Item_Type'] = df['Item_Identifier'].apply(lambda x : x[:2])
 df['New_Item_Type'].value_counts()
 
-
 # _**As the `New_Item_Type` column has values which is subjected to categories for better understanding, replacing the codes with meaningful categorical item name and getting the value counts of `New_Item_Type` column**_
-
-# In[32]:
-
 
 df['New_Item_Type'] = df['New_Item_Type'].replace({'FD' : 'Food', 'NC' : 'Non-Consumables', 'DR' : 'Drinks'})
 df['New_Item_Type'].value_counts()
 
-
 # _**Grouping by `New_Item_Type` and `Item_Fat_Content` with the aggregate function of size of the `Outlet_Type` column values**_
-
-# In[33]:
-
 
 df.groupby(['New_Item_Type','Item_Fat_Content']).agg({'Outlet_Type':[np.size]})
 

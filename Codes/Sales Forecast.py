@@ -697,11 +697,7 @@ print('R2 Score : ',r2_score(y_test,prediction))
 sns.distplot(y_test-prediction)
 plt.show()
 
-
 # _**Passing some of the list of parameters for the <span style ='color:green'> XGB Regressor </span> Model to run with Randomized Search CV Algorithm**_
-
-# In[68]:
-
 
 params = {
     "gamma": uniform(0, 0.5),
@@ -711,11 +707,7 @@ params = {
     "subsample": uniform(0.6, 0.4)
 }
 
-
 # _**Fitting The <span style ='color:green'>XGB Regressor</span> Model with the above mentioned parameters in the RandomizedSearchCV Algorithm and displaying the Best Parameters, Best Score and R2 Score between test dependent variable and predicted dependent variable**_
-
-# In[69]:
-
 
 xgb = XGBRegressor()
 xgb = RandomizedSearchCV(estimator = xgb, param_distributions = params, cv = 10, n_iter = 10, verbose = 0,
@@ -726,20 +718,12 @@ print('Best Score : ',xgb.best_score_,'\n')
 prediction = xgb.predict(x_test)
 print('R2 Score : ',r2_score(y_test,prediction))
 
-
 # _**Visualizing the data distribution of the dependent test variable , predicted dependent variable of the XGB Regressor Model against the density distribution using Seaborn Distplot**_
-
-# In[70]:
-
 
 sns.distplot(y_test-prediction)
 plt.show()
 
-
 # _**Passing some of the list of parameters for the <span style ='color:green'> CatBoost Regressor </span> Model to run with Randomized Search CV Algorithm**_
-
-# In[71]:
-
 
 params = {
     "learning_rate": uniform(0.03, 0.3), 
@@ -748,11 +732,7 @@ params = {
     "subsample": uniform(0.6, 0.4)
 }
 
-
 # _**Fitting The <span style ='color:green'>CatBoost Regressor</span> Model with the above mentioned parameters in the RandomizedSearchCV Algorithm and displaying the Best Parameters, Best Score and R2 Score between test dependent variable and predicted dependent variable**_
-
-# In[72]:
-
 
 cat = CatBoostRegressor(verbose = 0)
 cat = RandomizedSearchCV(estimator = cat, param_distributions = params, cv = 10, n_iter = 10, verbose = 0,
@@ -763,20 +743,12 @@ print('Best Score : ',cat.best_score_,'\n')
 prediction = cat.predict(x_test)
 print('R2 Score : ',r2_score(y_test,prediction))
 
-
 # _**Visualizing the data distribution of the dependent test variable , predicted dependent variable of the CatBoost Regressor Model against the density distribution using Seaborn Distplot**_
-
-# In[73]:
-
 
 sns.distplot(y_test-prediction)
 plt.show()
 
-
 # _**Fitting The <span style ='color:green'>CatBoost Regressor</span> Model with the best params got from the Randomized SearchCV and predicting the test dependent data to verify the r2 score with the r2 score got from Randomized SearchCV**_
-
-# In[74]:
-
 
 cat = CatBoostRegressor(learning_rate = 0.08941885942788719, max_depth = 2, n_estimators = 109, 
                         subsample = 0.6676443346250142, verbose = 0)
@@ -784,18 +756,13 @@ cat.fit(x_train,y_train)
 predictions = cat.predict(x_test)
 print('R2 score : ',r2_score(y_test,predictions))
 
-
 # ## Model Testing
-
 # _**Create the pickle file of the model with the highest r2 score with the name Model**_
-
-# In[75]:
-
 
 pickle.dump(cat,open('Model.pkl','wb'))
 
-
 # _**Loading the pickle file and predicting the dependent variable for the whole data and getting the r2 score between the predicted dependent variable and dependent variable**_
+
 model = pickle.load(open('Model.pkl','rb'))
 fpred = model.predict(x)
 print('R2 Score of Full Data : ',r2_score(y,fpred))

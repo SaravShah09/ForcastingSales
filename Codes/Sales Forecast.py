@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import pandas as pd
 import os
@@ -25,41 +23,23 @@ df = pd.read_csv('Train.csv')
 
 # ## Exploratory Data Analysis (EDA) 
 # _**Getting all the unique value counts from all the columns using <span style = 'background : green'> <span style = 'color : white'>  lambda   </span></span> function**_
-# In[3]:
 
 df.apply(lambda x : len(x.unique()))
 
-
 # _**Checking the dataset whether it's having duplicate values or not**_
-
-# In[4]:
-
 
 df.duplicated().sum()
 
-
 # _**Checking for the null values of all the columns from the dataset**_
-
-# In[5]:
-
 
 df.isnull().sum()
 
-
 # _**Getting the Data types and Non-null count of all the columns from the dataset using <span style = 'background : green'><span style = 'color : white'> .info() </span> </span> statement**_
-
-# In[6]:
-
 
 df.info()
 
-
 # ## Data Cleaning
-
 # _**Getting all the columns with "object" data type from the dataset and appending it to the list**_
-
-# In[7]:
-
 
 cat_col = []
 for x in df.dtypes.index:
@@ -67,75 +47,43 @@ for x in df.dtypes.index:
         cat_col.append(x)
 display(cat_col)
 
-
 # _**Removing the columns `Item_Identifier` and `Outlet_Identifier` from the list since the both columns doesn't need any cleaning**_ 
-
-# In[8]:
-
 
 cat_col.remove('Item_Identifier')
 cat_col.remove('Outlet_Identifier')
 
-
 # _**Displaying the list after removing certain columns from it to verify**_
-
-# In[9]:
-
 
 display(cat_col)
 
-
 # _**Getting the unique value counts of the columns in the list**_
-
-# In[10]:
-
 
 for col in cat_col:
     print(col,len(df[col].unique()))
 
-
 # _**Checking the value counts of the columns from the list and displaying it column wise**_
-
-# In[11]:
-
 
 for col in cat_col:
     print(col)
     print(df[col].value_counts(),'\n')
     print('-'*55)
 
-
 # _**Getting the null values from the `Item_Weight` column for the null value treatment process and displaying the Dataset with null values in the `Item_Weight` column**_
-
-# In[12]:
-
 
 miss_bool = df['Item_Weight'].isnull()
 Item_Weight_Null = df[df['Item_Weight'].isnull()]
 display(Item_Weight_Null)
 
-
 # _**Identifying the unique value counts in `Item_Identifier` column from the `Item_Weight` null value dataset**_
-
-# In[13]:
-
 
 Item_Weight_Null['Item_Identifier'].value_counts()
 
-
 # _**Getting the mean values of the `Item_Weight` with respect to `Item_Identifier` column of the dataset using <span style = 'background : green'><span style = 'color : white'> Pivot Table </span> </span> function**_
-
-# In[14]:
-
 
 Item_Weight_Mean = df.pivot_table(values = 'Item_Weight', index = 'Item_Identifier')
 display(Item_Weight_Mean)
 
-
 # _**Treating the missing values of the `Item_Weight` column with the mean values we got above using <span style = 'background : green'><span style = 'color : white'> Pivot Table </span> </span> function and filling it out with respect to `Item_Identifier` column**_
-
-# In[15]:
-
 
 for i, item in enumerate(df['Item_Identifier']):
     if miss_bool[i]:
@@ -144,52 +92,28 @@ for i, item in enumerate(df['Item_Identifier']):
         else:
             df['Item_Weight'][i] = np.mean(df['Item_Weight'])
 
-
 # _**After treating the null values in the `Item_Weight` column, checking for the null value in the column**_
-
-# In[16]:
-
 
 df['Item_Weight'].isna().sum()
 
-
 # _**Getting the unique value counts from `Outlet_Size` column from the dataset**_
-
-# In[17]:
-
 
 df['Outlet_Size'].value_counts()
 
-
 # _**Checking out for the null value counts from the `Outlet_Size` column from the dataset**_
-
-# In[18]:
-
 
 df['Outlet_Size'].isnull().sum()
 
-
 # _**Getting the null values from the `Outlet_Size` column for the null value treatment process and displaying the Dataset with null values in the `Outlet_Size` column**_
-
-# In[19]:
-
 
 Outlet_Size_Null = df[df['Outlet_Size'].isna()]
 display(Outlet_Size_Null)
 
-
 # _**Getting the value counts of `Outlet_Type` from the `Outlet_Size` null dataset**_
-
-# In[20]:
-
 
 Outlet_Size_Null['Outlet_Type'].value_counts()
 
-
 # _**Grouping by `Outlet_Type` and `Outlet_Size` with the aggregate function of size of the `Outlet_Type` column values**_
-
-# In[21]:
-
 
 df.groupby(['Outlet_Type','Outlet_Size']).agg({'Outlet_Type':[np.size]})
 

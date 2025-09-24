@@ -20,22 +20,12 @@ import pickle
 import warnings
 warnings.filterwarnings('ignore')
 
-
-# _**Changing The Default Working Directory Path & Reading the Dataset using Pandas Command**_
-
-# In[2]:
-
-
 os.chdir('C:\\Users\\Shridhar\\Desktop\\Sales Project')
 df = pd.read_csv('Train.csv')
 
-
 # ## Exploratory Data Analysis (EDA) 
-
 # _**Getting all the unique value counts from all the columns using <span style = 'background : green'> <span style = 'color : white'>  lambda   </span></span> function**_
-
 # In[3]:
-
 
 df.apply(lambda x : len(x.unique()))
 

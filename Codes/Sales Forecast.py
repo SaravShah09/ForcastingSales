@@ -381,11 +381,7 @@ plt.title('Count of Outlet_Location_Type')
 plt.savefig('Count of Outlet_Location_Type.png')
 plt.show()
 
-
 # _**Plotting the Bar Graph with count of `Outlet_Size`  and confirm that there are no null values and identify all unique values from the `Outlet_Size` and saving the PNG File**_
-
-# In[41]:
-
 
 plot = sns.countplot(x = df['Outlet_Size'])
 for p in plot.patches:
@@ -395,11 +391,7 @@ plt.title('Count of Outlet_Size')
 plt.savefig('Count of Outlet_Size.png')
 plt.show()
 
-
 # _**Plotting the Bar Graph with count of `Outlet_Type`  and confirm that there are no null values and identify all unique values from the `Outlet_Type` and saving the PNG File**_
-
-# In[42]:
-
 
 plot = sns.countplot(x = df['Outlet_Type'])
 for p in plot.patches:
@@ -409,81 +401,46 @@ plt.title('Count of Outlet_Type')
 plt.savefig('Count of Outlet_Type.png')
 plt.show()
 
-
 # _**Visualizing the data distribution of the `Item_weight` column against the density distribution using Seaborn Distplot and saving the PNG file**_
-
-# In[43]:
-
 
 sns.distplot(df['Item_Weight'],bins = 20)
 plt.title('Distribution of Item_Weight')
 plt.savefig('Distribution of Item_Weight.png')
 plt.show()
 
-
 # _**Getting the Correlation Values from all the numeric columns from the dataset using Seaborn Heatmap & saving the PNG File**_
-
-# In[44]:
-
 
 sns.heatmap(df.corr(),cmap = 'binary', cbar = True, annot = True, square = True)
 plt.title('Correlation Heat Map')
 plt.savefig('Correlation Heat Map.png')
 plt.show()
 
-
 # ## Data Preprocessing
-
 # _**Label Encoding the `Outlet_Identifier` column and adding it as a new column `Outlet` to the dataset**_
-
-# In[45]:
-
 
 le = LabelEncoder()
 df['Outlet'] = le.fit_transform(df['Outlet_Identifier'])
 
-
 # _**Getting the data types of all the columns to find out the "object" data types columns for preprocessing before assigning it to dependent variable and independent variable**_
-
-# In[46]:
-
 
 df.dtypes
 
-
 # _**Adding all the necessary column with "object" data types to the list and Label Encoding the columns**_
-
-# In[47]:
-
 
 cat_col = ['Item_Fat_Content','Item_Type','Outlet_Size','Outlet_Location_Type','Outlet_Type','New_Item_Type']
 for col in cat_col:
     df[col] = le.fit_transform(df[col])
 
-
 # _**One Hot Encoding the columns `Item_Fat_Content`,`Outlet_Size`,`Outlet_Location_Type`,`Outlet_Type`,`New_Item_Type` using  <span style = 'background : green'><span style = 'color : white'> get dummies </span> </span> function**_ 
-
-# In[48]:
-
 
 df = pd.get_dummies(df,columns = ['Item_Fat_Content','Outlet_Size','Outlet_Location_Type','Outlet_Type','New_Item_Type'])
 
-
 # _**Assigning the dependent and independent variable**_
-
-# In[49]:
-
 
 x = df.drop(['Item_Identifier','Outlet_Identifier','Outlet_Establishment_Year','Item_Outlet_Sales'],axis=1)
 y=df['Item_Outlet_Sales']
 
-
-# ## Model Fitting
-
 # _**Splitting the dependent variable & independent variable into training and test dataset using  <span style = 'background : green'><span style = 'color : white'> train test split </span> </span>**_
-
-# In[50]:
-
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 10)
 

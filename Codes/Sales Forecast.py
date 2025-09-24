@@ -294,39 +294,22 @@ df['New_Item_Type'].value_counts()
 
 df.groupby(['New_Item_Type','Item_Fat_Content']).agg({'Outlet_Type':[np.size]})
 
-
 # _**From the above output its clear that Non-Consumable type from `New_Item_Type` column is mapped to Low Fat category in `Item_Fat_Content` column. So marking it as Non-Edible in `Item_Fat_Content` column**_
-
-# In[34]:
-
 
 df.loc[df['New_Item_Type'] == 'Non-Consumables','Item_Fat_Content'] = 'Non-Edible'
 df['Item_Fat_Content'].value_counts()
 
-
 # _**Getting all the unique value from `Outlet_Establishment_Year` column from the dataset**_
-
-# In[35]:
-
 
 df['Outlet_Establishment_Year'].unique()
 
-
 # _**The `Outlet_Establishment_Year` column from the dataset has no significance on its own so calculating the years of outlet established until this year and adding it as `Outlet_Years` column to the dataset**_
-
-# In[36]:
-
 
 curr_time = datetime.datetime.now()
 df['Outlet_Years'] = df['Outlet_Establishment_Year'].apply(lambda x: curr_time.year - x)
 
-
 # ## Data Visualization
-
 # _**Plotting the Bar Graph with count of `Item_Fat_Content`  and confirm that there are no null values and identify all unique values from the `Item_Fat_Content` and saving the PNG File**_
-
-# In[37]:
-
 
 plt.rcParams['figure.figsize'] = 15,10
 plt.style.use('fivethirtyeight')
@@ -338,11 +321,7 @@ plt.title('Count of Item_Fat_Content')
 plt.savefig('Count of Item_Fat_Content.png')
 plt.show()
 
-
 # _**Plotting the Bar Graph with count of `Item_Type`  and confirm that there are no null values and identify all unique values from the `Item_Type` and saving the PNG File**_
-
-# In[38]:
-
 
 plot = sns.countplot(x = df['Item_Type'])
 for p in plot.patches:
@@ -353,11 +332,7 @@ plt.title('Count of Item_Type')
 plt.savefig('Count of Item_Type.png')
 plt.show()
 
-
 # _**Plotting the Bar Graph with count of `Outlet_Establishment_Year`  and confirm that there are no null values and identify all unique values from the `Outlet_Establishment_Year` and saving the PNG File**_
-
-# In[39]:
-
 
 plot = sns.countplot(x = df['Outlet_Establishment_Year'])
 for p in plot.patches:
@@ -367,11 +342,7 @@ plt.title('Count of Outlet_Establishment_Year')
 plt.savefig('Count of Outlet_Establishment_Year.png')
 plt.show()
 
-
 # _**Plotting the Bar Graph with count of `Outlet_Location_Type`  and confirm that there are no null values and identify all unique values from the `Outlet_Location_Type` and saving the PNG File**_
-
-# In[40]:
-
 
 plot = sns.countplot(x = df['Outlet_Location_Type'])
 for p in plot.patches:

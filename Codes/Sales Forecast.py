@@ -487,11 +487,7 @@ y=df['Item_Outlet_Sales']
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state = 10)
 
-
 # _**Defining the function for the ML algorithm and fitting it with the passing dependent and independent variable, predicting the dependent variable using algorithm with independent variable. With using  <span style = 'background : green'><span style = 'color : white'> cross val score [Cross Validation] </span> </span> process getting the Model Report with cv_score using "neg_mean_squared_error" as scoring and also getting the absolute average mean of cv_score. After that using  <span style = 'background : green'><span style = 'color : white'> cross val score [Cross Validation] </span> </span> process, getting the cv_score as R2 score using default scoring parameter and also again getting the mean value of cv_score with default scoring as Average R2 score. End of the function the Accuracy for full data is actually determined using  actual R2 score founded between the dependent variable and predicted dependent variable. Atlast getting the coefficient of algorithm with all the columns and plotting the graph using coefficient value of algorithm to show impact of the each column**_
-
-# In[51]:
-
 
 def train(model, x, y):
     model.fit(x, y)
@@ -515,38 +511,22 @@ def train(model, x, y):
     coef.plot(kind='bar', title="Model Coefficients")
     plt.show()
 
-
 # _**Fitting the <span style ='color:green'> Linear Regression </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[52]:
-
 
 model = LinearRegression(normalize = True)
 train(model,x_train,y_train)
 
-
 # _**Fitting the <span style ='color:green'> Ridge </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[53]:
-
 
 model = Ridge(normalize = True)
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> Lasso </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[54]:
-
 
 model = Lasso(normalize = True)
 train(model, x_train, y_train)
 
-
 # _**Defining the function for the ML algorithm and fitting it with the passing dependent and independent variable, predicting the dependent variable using algorithm with independent variable. With using  <span style = 'background : green'><span style = 'color : white'> cross val score [Cross Validation] </span> </span> process getting the Model Report with cv_score using "neg_mean_squared_error" as scoring and also getting the absolute average mean of cv_score. After that using  <span style = 'background : green'><span style = 'color : white'> cross val score [Cross Validation] </span> </span> process, getting the cv_score as R2 score using default scoring parameter and also again getting the mean value of cv_score with default scoring as Average R2 score. End of the function the Accuracy for full data is actually determined using  actual R2 score founded between the dependent variable and predicted dependent variable. Atlast getting the feature importance of all the columns and plotting the graph using feature importance of algorithm to show impact of the each column**_
-
-# In[55]:
-
 
 def train(model, x, y):
     model.fit(x, y)
@@ -569,29 +549,17 @@ def train(model, x, y):
     coef.plot(kind='bar', title="Feature Importance")
     plt.show()
 
-
 # _**Fitting the <span style ='color:green'> Decision Tree Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[56]:
-
 
 model = DecisionTreeRegressor()
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> Random Forest Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[57]:
-
 
 model = RandomForestRegressor()
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> Extra Trees Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[58]:
-
 
 model = ExtraTreesRegressor()
 train(model, x_train, y_train)

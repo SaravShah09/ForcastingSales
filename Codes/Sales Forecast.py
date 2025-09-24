@@ -596,38 +596,22 @@ train(model, x_train, y_train)
 model = ExtraTreesRegressor()
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> LGBM Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[59]:
-
 
 model = LGBMRegressor()
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> XGB Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[60]:
-
 
 model = XGBRegressor()
 train(model, x_train, y_train)
 
-
 # _**Fitting the <span style ='color:green'> Cat Boost Regressor </span> algorithm to the model and passing it to the defined function with train dependent and train independent variable and getting the output for the defined function**_
-
-# In[61]:
-
 
 model = CatBoostRegressor(verbose = 0)
 train(model, x_train, y_train)
 
-
 # _**Passing some of the list of parameters for the <span style ='color:green'> Random Forest Regressor </span> Model to run with Randomized Search CV Algorithm**_
-
-# In[62]:
-
 
 random_grid = {
                'max_features': ['auto', 'sqrt'],
@@ -636,11 +620,7 @@ random_grid = {
                'min_samples_leaf': [1, 2, 5, 10]
 }
 
-
 # _**Fitting The <span style ='color:green'>Random Forest Regressor</span> Model with the above mentioned parameters in the RandomizedSearchCV Algorithm and displaying the Best Parameters, Best Score and R2 Score between test dependent variable and predicted dependent variable**_
-
-# In[63]:
-
 
 RF = RandomForestRegressor()
 RF = RandomizedSearchCV(estimator = RF, param_distributions = random_grid, scoring = 'neg_mean_squared_error', n_iter =10,
@@ -651,20 +631,12 @@ print('Best Score : ',RF.best_score_,'\n')
 prediction = RF.predict(x_test)
 print('R2 Score : ',r2_score(y_test,prediction))
 
-
 # _**Visualizing the data distribution of the dependent test variable , predicted dependent variable of the Random Forest Regressor Model against the density distribution using Seaborn Distplot**_
-
-# In[64]:
-
 
 sns.distplot(y_test-prediction)
 plt.show()
 
-
 # _**Passing some of the list of parameters for the <span style ='color:green'> LGBM Regressor </span> Model to run with Randomized Search CV Algorithm**_
-
-# In[65]:
-
 
 params = {
     "learning_rate": uniform(0.03, 0.3), 
@@ -673,11 +645,7 @@ params = {
     "subsample": uniform(0.6, 0.4)
 }
 
-
 # _**Fitting The <span style ='color:green'>LGBM Regressor</span> Model with the above mentioned parameters in the RandomizedSearchCV Algorithm and displaying the Best Parameters, Best Score and R2 Score between test dependent variable and predicted dependent variable**_
-
-# In[66]:
-
 
 lgb = LGBMRegressor()
 lgb = RandomizedSearchCV(estimator = lgb, param_distributions = params, cv = 10, n_iter = 10, verbose = 0,
@@ -688,11 +656,7 @@ print('Best Score : ',lgb.best_score_,'\n')
 prediction = lgb.predict(x_test)
 print('R2 Score : ',r2_score(y_test,prediction))
 
-
 # _**Visualizing the data distribution of the dependent test variable , predicted dependent variable of the LGBM Regressor Model against the density distribution using Seaborn Distplot**_
-
-# In[67]:
-
 
 sns.distplot(y_test-prediction)
 plt.show()
